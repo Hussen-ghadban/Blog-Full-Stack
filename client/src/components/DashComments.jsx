@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Modal, Table, Button } from 'flowbite-react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';

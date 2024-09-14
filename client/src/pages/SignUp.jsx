@@ -1,6 +1,7 @@
 import { Alert, Button, Label, Spinner, TextInput } from 'flowbite-react';
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import OAuth from '../components/OAuth';
 
 export default function SignUp() {
@@ -8,6 +9,15 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  const { currentUser } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    // Redirect to home or any other page if the user is logged in
+    if (currentUser) {
+      navigate('/'); // or another page the user should go to
+    }
+  }, [currentUser, navigate]);
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
@@ -44,7 +54,7 @@ export default function SignUp() {
         <div className='flex-1'>
           <Link to='/' className='font-bold dark:text-white text-4xl'>
             <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
-              Sahand's
+              Hussen
             </span>
             Blog
           </Link>
@@ -58,7 +68,7 @@ export default function SignUp() {
         <div className='flex-1'>
           <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
             <div>
-              <Label value='Your username' />
+              <Label value='Your username' htmlFor='username' />
               <TextInput
                 type='text'
                 placeholder='Username'
@@ -67,7 +77,7 @@ export default function SignUp() {
               />
             </div>
             <div>
-              <Label value='Your email' />
+              <Label value='Your email' htmlFor='email'/>
               <TextInput
                 type='email'
                 placeholder='name@company.com'
@@ -76,7 +86,7 @@ export default function SignUp() {
               />
             </div>
             <div>
-              <Label value='Your password' />
+              <Label value='Your password' htmlFor='password'/>
               <TextInput
                 type='password'
                 placeholder='Password'
